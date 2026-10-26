@@ -1,0 +1,61 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ir-system"
+version = "0.1.0"
+description = "End-to-end Information Retrieval pipeline"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "bm25s>=0.2.0,<0.3",
+    "numpy>=1.24",
+    "tqdm>=4.66",
+]
+
+
+[project.optional-dependencies]
+# Separate environment: do not combine with the ColBERT extras.
+jina-v3 = [
+    "transformers>=4.56,<5",
+    "torch>=2.2",
+]
+dense = [
+    "faiss-cpu>=1.7",
+    "sentence-transformers>=3.0",
+    "torch>=2.0",
+]
+# Qwen3 uses a modern stack; install separately from the ColBERT extras.
+qwen3 = [
+    "sentence-transformers>=5.4,<6",
+    "transformers>=4.51,<5",
+    "torch>=2.0",
+    "faiss-cpu>=1.7",
+]
+late-interaction = [
+    "colbert-ai==0.2.22",
+    "transformers>=4.40,<4.48",
+    "torch>=2.0",
+]
+cross-encoder = [
+    "sentence-transformers>=3.0",
+    "torch>=2.0",
+]
+all = [
+    "sentence-transformers>=3.0",
+    "transformers>=4.40,<4.48",
+    "torch>=2.0",
+    "faiss-cpu>=1.7",
+    "colbert-ai==0.2.22",
+]
+
+[project.scripts]
+ir-system = "ir_system.cli.main:main"
+ir-analyze = "ir_system.cli.analysis:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-dir]
+"" = "src"
